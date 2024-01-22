@@ -17,6 +17,11 @@ public class TodoParser extends BaseParser<Todo, TodoDTO> {
 		entity.setName(dto.getName());
 		entity.setDateCreation(dto.getDateCreation());
 		entity.setStatus(dto.getStatus());
+		entity.setProviderId(dto.getProviderId());
+		entity.setMoneyhubId(dto.getMoneyhubId());
+		entity.setAccountType(dto.getAccountType()!=null ?
+				dto.getAccountType() : null);
+		entity.setCorrelationId(dto.getCorrelationId());
 		return entity;
 	}
 
@@ -28,7 +33,11 @@ public class TodoParser extends BaseParser<Todo, TodoDTO> {
 		dto.setName(entity.getName());
 		dto.setDateCreation(entity.getDateCreation());
 		dto.setStatus(entity.getStatus());
-		
+		dto.setAccountType(entity.getAccountType()!=null ?
+				entity.getAccountType() : null);
+		dto.setProviderId(entity.getProviderId());
+		dto.setMoneyhubId(entity.getMoneyhubId());
+		dto.setCorrelationId(entity.getCorrelationId());
 		return dto;
 	}
 }

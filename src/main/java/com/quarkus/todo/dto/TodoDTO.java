@@ -29,4 +29,18 @@ public class TodoDTO implements Serializable {
 
 	private String status;
 
+	private String moneyhubId;
+
+	private String providerId;
+
+	private String accountType;
+
+	private String correlationId;
+
+	public void setHeaders(String moneyhubId, String providerId, String accountType, String correlationId) {
+		this.moneyhubId = moneyhubId;
+		this.providerId = providerId;
+		this.accountType = accountType;
+		this.correlationId = correlationId;
+	}
 }

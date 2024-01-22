@@ -9,10 +9,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 @Table(name = "todo")
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "LIST_TODO", query = ""
-				+ "SELECT id, name, dateCreation, status FROM todo", resultClass = Todo.class),
+				+ "SELECT id, name, dateCreation, status, moneyhubId, providerId, accountType, correlationId FROM todo", resultClass = Todo.class),
 		@NamedNativeQuery(name = "DELETE_TODO", query = "DELETE todo WHERE id = :id"),
 		@NamedNativeQuery(name = "SEARCH_BY_ID", query = ""
-				+ "SELECT id, name, dateCreation,status FROM todo where id = :id", resultClass = Todo.class),
+				+ "SELECT id, name, dateCreation,status, moneyhubId, providerId, accountType, correlationId FROM todo where id = :id", resultClass = Todo.class),
 		@NamedNativeQuery(name = "UPDATE_TODO", query = "UPDATE todo "
 				+ "set name = :name, dateCreation = :dateCreation,status = :status WHERE id = :id"), })
 public class Todo extends PanacheEntityBase {
@@ -30,6 +30,50 @@ public class Todo extends PanacheEntityBase {
 
 	@Column(name = "status", length = 250, nullable = false)
 	private String status;
+
+	@Column(name="moneyhubId", length = 255, nullable = false)
+	private String moneyhubId;
+
+	@Column(name = "providerId", length = 255, nullable = false)
+	private String providerId;
+
+	@Column(name = "accountType", length = 255)
+	private String accountType;
+
+	@Column(name = "correlationId", length = 255, nullable = false)
+	private String correlationId;
+
+	public String getMoneyhubId() {
+		return moneyhubId;
+	}
+
+	public void setMoneyhubId(String moneyhubId) {
+		this.moneyhubId = moneyhubId;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public String getCorrelationId() {
+		return correlationId;
+	}
+
+	public void setCorrelationId(String correlationId) {
+		this.correlationId = correlationId;
+	}
 
 	public Todo(Long id) {
 		this.id = id;

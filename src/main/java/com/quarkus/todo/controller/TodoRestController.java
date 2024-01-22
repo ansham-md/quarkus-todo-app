@@ -3,30 +3,27 @@ package com.quarkus.todo.controller;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.annotations.IsValidEnum;
+import com.constants.ProvidersConstants;
 import com.quarkus.todo.dto.TodoDTO;
 import com.quarkus.todo.service.TodoService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+
+import static com.constants.HeaderConstants.*;
 
 @Path("todo")
 @Produces(MediaType.APPLICATION_JSON)
@@ -51,7 +48,15 @@ public class TodoRestController {
 	@Operation(summary = "Add a task", description = "Add a task")
 	@APIResponse(responseCode = "201", description = "task", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = TodoDTO.class)) })
-	public Response addTask(TodoDTO todo) {
+	public Response addTask(@Size(min = 2,max = 10,message = "Invalid header length {} \"x-mh-id\"")
+								@HeaderParam(X_GTTP_MH_ID) final String moneyHubId,
+							@IsValidEnum(value = ProvidersConstants.class,message = "Invalid Header Enum Param")
+								@HeaderParam(X_GTTP_PROVIDER_ID) final String providerId,
+							@NotNull @Size(min = 3,max = 21,message = "Invalid header length {} \"x-gttp-txn-correlation-id\"")
+								@HeaderParam(X_GTTP_TXN_CORRELATION_ID) final String correlationId,
+								@HeaderParam(X_GTTP_ACCOUNT_TYPE) final String accountType,
+							@Valid TodoDTO todo) {
+		todo.setHeaders(moneyHubId,providerId,accountType,correlationId);
 		Set<ConstraintViolation<TodoDTO>> errors = validator.validate(todo);
 		if (errors.isEmpty()) {
 			service.insert(todo);
