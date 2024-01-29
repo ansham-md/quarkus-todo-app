@@ -1,4 +1,4 @@
-package com.constants;
+package com.quarkus.todo.constants;
 
 public class HeaderConstants {
     public static final String X_GTTP_MH_ID ="x-gttp-mh-id";

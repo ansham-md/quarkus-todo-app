@@ -1,4 +1,4 @@
-package com.constants;
+package com.quarkus.todo.constants;
 
 public enum ProvidersConstants {
 

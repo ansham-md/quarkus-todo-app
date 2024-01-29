@@ -1,10 +1,8 @@
-package com.annotations;
+package com.quarkus.todo.annotations;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.EnumUtils;
-
-import java.util.EnumSet;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 

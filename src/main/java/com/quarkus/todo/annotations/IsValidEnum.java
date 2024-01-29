@@ -1,4 +1,4 @@
-package com.annotations;
+package com.quarkus.todo.annotations;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
